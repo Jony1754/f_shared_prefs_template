@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../domain/use_case/authentication.dart';
 
@@ -22,9 +23,23 @@ class AuthenticationController extends GetxController {
 
   // para cada uno llamar los métodos del use_case authentication
 
-  Future<bool> login(user, password) async {}
+  Future<bool> login(user, password) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('user', user);
+    prefs.setString('password', password);
+    logged = true;
+    return true;
+  }
 
-  Future<bool> signup(user, password) async {}
+  Future<bool> signup(user, password) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('user', user);
+    prefs.setString('password', password);
 
-  void logout() {}
+    return true;
+  }
+
+  void logout() {
+    logged = false;
+  }
 }
